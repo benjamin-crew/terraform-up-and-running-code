@@ -1,7 +1,30 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.1.0"
+    }
+  }
+}
+
 provider "azurerm" {
     tenant_id            = "3ccdf94d-2f74-44fb-a1f7-4814ebf776e7"
     subscription_id      = "7c953d5a-e175-405e-bf11-a8cb0ecc9f09"
   features {}
+}
+
+locals {
+  custom_data = <<-EOF
+            #!/bin/bash
+            echo "Hello, World" > index.html
+            nohup busybox httpd -f -p ${var.server_port} &
+  EOF
+  }
+
+variable "server_port" {
+  description = "The port the server will use for HTTP requests"
+  type = number
+  default = 8080
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -52,6 +75,18 @@ resource "azurerm_network_security_group" "nsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+    security_rule {
+    name                       = "HTTP-Inbound"
+    priority                   = 101
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = var.server_port
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 }
 
 resource "azurerm_network_interface_security_group_association" "nsg_association" {
@@ -73,14 +108,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
   location            = azurerm_resource_group.rg.location
   size                = "Standard_B1ls"
   admin_username      = "adminuser"
+  admin_password = "Xkmmdj3hgvy"
+  disable_password_authentication = false
   network_interface_ids = [
     azurerm_network_interface.nic.id,
   ]
-
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
 
   os_disk {
     caching              = "ReadWrite"
@@ -93,4 +125,16 @@ resource "azurerm_linux_virtual_machine" "vm" {
     sku       = "16.04-LTS"
     version   = "latest"
   }
+
+  custom_data = base64encode(local.custom_data)
 }
+
+output "instance_ip" {
+  value = azurerm_public_ip.pip.ip_address
+}
+
+# To output the ssh key:
+# terraform output -raw tls_private_key > linux_vm1
+
+# To ssh to the vm:
+# ssh -i linux_vm1 azureuser@<public_ip_address>
