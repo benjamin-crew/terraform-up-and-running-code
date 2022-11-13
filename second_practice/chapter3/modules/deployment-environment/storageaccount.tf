@@ -6,6 +6,11 @@ resource "azurerm_storage_account" "tfstate-storage-account" {
   account_kind             = "StorageV2"
   account_replication_type = "LRS"
   versioning_enabled = true
+  enable_https_traffic_only = true
+
+  delete_retention_policy {
+    days = 7
+  }
 
   # lifecycle {
   #   prevent_destroy = true
