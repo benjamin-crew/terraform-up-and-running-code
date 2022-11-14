@@ -1,22 +1,4 @@
-variable "server_port" {
-  description = "The port the server will use for HTTP requests"
-  type        = number
-  default     = 80
-}
 
-resource "azurerm_virtual_network" "vnet" {
-  name                = "bc-uks-tst-tfupandrunning-vnet01"
-  address_space       = ["172.18.100.0/24"]
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-}
-
-resource "azurerm_subnet" "subnet" {
-  name                 = "bc-uks-tst-tfupandrunning-sb01"
-  resource_group_name  = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["172.18.100.0/28"]
-}
 
 resource "azurerm_public_ip" "public_ip" {
   name                = "bc-uks-tst-tfupandrunning-pip-01"
@@ -117,75 +99,7 @@ resource "azurerm_monitor_autoscale_setting" "autoscale" {
   }
 }
 
-resource "azurerm_network_security_group" "nsg" {
-  name                = "bc-uks-tst-tfupandrunning-nsg01"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-}
 
-
-resource "azurerm_network_security_rule" "ssh_rule" {
-  name                        = "ssh"
-  priority                    = 120
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = "22"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = azurerm_resource_group.rg.name
-  network_security_group_name = azurerm_network_security_group.nsg.name
-}
-
-resource "azurerm_network_security_rule" "httpd_rule" {
-  name                        = "httpd"
-  priority                    = 119
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "Tcp"
-  source_port_range           = "*"
-  destination_port_range      = var.server_port
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = azurerm_resource_group.rg.name
-  network_security_group_name = azurerm_network_security_group.nsg.name
-}
-
-# resource "azurerm_network_security_rule" "sql_region_rule" {
-#   name                       = "sql-region"
-#   priority                   = 118
-#   direction                  = "Outbound"
-#   access                     = "Allow"
-#   protocol                   = "Tcp"
-#   source_port_range          = "*"
-#   source_address_prefix      = "*"
-#   destination_port_range     = "11000-11999"
-#   destination_address_prefix = "Sql.UKSouth"
-#   resource_group_name         = azurerm_resource_group.rg.name
-#   network_security_group_name = azurerm_network_security_group.nsg.name
-# }
-
-# resource "azurerm_network_security_rule" "sql_gateway_rule" {
-#   for_each = local.sql_gateways
-
-#   name                       = each.value.rule_name
-#   priority                   = each.value.priority
-#   direction                  = "Outbound"
-#   access                     = "Allow"
-#   protocol                   = "Tcp"
-#   source_port_range          = "*"
-#   source_address_prefix      = "*"
-#   destination_port_range     = "1433"
-#   destination_address_prefix = each.value.dest_address
-#   resource_group_name         = azurerm_resource_group.rg.name
-#   network_security_group_name = azurerm_network_security_group.nsg.name
-# }
-
-resource "azurerm_subnet_network_security_group_association" "nsg_association" {
-  subnet_id                 = azurerm_subnet.subnet.id
-  network_security_group_id = azurerm_network_security_group.nsg.id
-}
 
 resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   name                            = "bc-uks-tst-tfupandrunning-vmss-01"
