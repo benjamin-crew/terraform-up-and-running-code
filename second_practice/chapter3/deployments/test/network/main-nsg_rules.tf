@@ -8,8 +8,12 @@ resource "azurerm_network_security_rule" "ssh_rule" {
   destination_port_range      = "22"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = module.network.data.azurerm_resource_group.deployment-environment-resource-group.name
-  network_security_group_name = module.network.azurerm_network_security_group.nsg.name
+  resource_group_name         = module.network.resource_group_name
+  network_security_group_name = module.network.nsg_name
+
+  depends_on = [
+    module.network
+  ]
 }
 
 resource "azurerm_network_security_rule" "httpd_rule" {
@@ -22,6 +26,10 @@ resource "azurerm_network_security_rule" "httpd_rule" {
   destination_port_range      = var.server_port
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = module.network.data.azurerm_resource_group.deployment-environment-resource-group.name
-  network_security_group_name = module.network.azurerm_network_security_group.nsg.name
+  resource_group_name         = module.network.resource_group_name
+  network_security_group_name = module.network.nsg_name
+
+  depends_on = [
+    module.network
+  ]
 }

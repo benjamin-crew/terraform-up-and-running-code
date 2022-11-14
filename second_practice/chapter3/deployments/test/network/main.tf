@@ -21,13 +21,3 @@ module "network" {
   nsg_name                      = var.nsg_name
 
 }
-
-# module "vmss_subnet_nsg_rules" {
-#   source = "../../../modules/vmss_subnet_nsg_rules"
-
-#   resource_group_name           = var.resource_group_name
-#   virtual_network_name          = var.virtual_network_name
-#   subnet_name                   = var.subnet_name
-#   nsg_name                      = var.nsg_name
-#   server_port = var.server_port
-# }

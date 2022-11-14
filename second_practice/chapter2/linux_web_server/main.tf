@@ -1,15 +1,15 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "3.1.0"
     }
   }
 }
 
 provider "azurerm" {
-    tenant_id            = "3ccdf94d-2f74-44fb-a1f7-4814ebf776e7"
-    subscription_id      = "7c953d5a-e175-405e-bf11-a8cb0ecc9f09"
+  tenant_id       = "3ccdf94d-2f74-44fb-a1f7-4814ebf776e7"
+  subscription_id = "7c953d5a-e175-405e-bf11-a8cb0ecc9f09"
   features {}
 }
 
@@ -19,12 +19,12 @@ locals {
             echo "Hello, World" > index.html
             nohup busybox httpd -f -p ${var.server_port} &
   EOF
-  }
+}
 
 variable "server_port" {
   description = "The port the server will use for HTTP requests"
-  type = number
-  default = 8080
+  type        = number
+  default     = 8080
 }
 
 resource "azurerm_resource_group" "rg" {
@@ -55,7 +55,7 @@ resource "azurerm_network_interface" "nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id = azurerm_public_ip.pip.id
+    public_ip_address_id          = azurerm_public_ip.pip.id
   }
 }
 
@@ -76,7 +76,7 @@ resource "azurerm_network_security_group" "nsg" {
     destination_address_prefix = "*"
   }
 
-    security_rule {
+  security_rule {
     name                       = "HTTP-Inbound"
     priority                   = 101
     direction                  = "Inbound"
@@ -102,13 +102,13 @@ resource "azurerm_public_ip" "pip" {
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                = "bc-uks-tst-tfupandrunning-linux-vm01"
-  computer_name = "terraform-example"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  size                = "Standard_B1ls"
-  admin_username      = "adminuser"
-  admin_password = "Xkmmdj3hgvy"
+  name                            = "bc-uks-tst-tfupandrunning-linux-vm01"
+  computer_name                   = "terraform-example"
+  resource_group_name             = azurerm_resource_group.rg.name
+  location                        = azurerm_resource_group.rg.location
+  size                            = "Standard_B1ls"
+  admin_username                  = "adminuser"
+  admin_password                  = "Xkmmdj3hgvy"
   disable_password_authentication = false
   network_interface_ids = [
     azurerm_network_interface.nic.id,
