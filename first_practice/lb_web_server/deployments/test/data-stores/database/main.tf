@@ -15,9 +15,9 @@ module "database" {
   # Resource Group
   rg_name = var.rg_name
 
-  mssql_database_name = var.mssql_database_name
-  mssql_server_name = var.mssql_server_name
-  mssql_login = var.mssql_login
+  mssql_database_name  = var.mssql_database_name
+  mssql_server_name    = var.mssql_server_name
+  mssql_login          = var.mssql_login
   mssql_login_password = var.mssql_login_password
 }
 

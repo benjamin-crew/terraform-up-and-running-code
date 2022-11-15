@@ -1,9 +1,9 @@
 resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
-  name                            = "bc-uks-tst-tfupandrunning-vmss-01"
+  name                            = var.vmss_name
   resource_group_name             = data.azurerm_resource_group.deployment-environment-resource-group.name
   location                        = data.azurerm_resource_group.deployment-environment-resource-group.location
-  sku                             = "Standard_B1ls"
-  instances                       = 1
+  sku                             = var.vmss_sku
+  instances                       = var.vmss_instances
   admin_username                  = "adminuser"
   admin_password                  = var.vmss_password
   disable_password_authentication = false

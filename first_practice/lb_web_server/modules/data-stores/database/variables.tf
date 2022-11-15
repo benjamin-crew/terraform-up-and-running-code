@@ -13,6 +13,6 @@ variable "mssql_login" {
   type = string
 }
 variable "mssql_login_password" {
-  type = string
+  type      = string
   sensitive = true
 }

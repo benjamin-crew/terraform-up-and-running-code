@@ -18,7 +18,7 @@ module "network" {
   # Virtual Network
   vnet_name     = var.vnet_name
   address_space = var.address_space
-  vnet_tags = var.vnet_tags
+  vnet_tags     = var.vnet_tags
 
   # Subnet
   vmss_subnet_name  = var.vmss_subnet_name

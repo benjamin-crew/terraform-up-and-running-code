@@ -13,5 +13,5 @@ module "data_sources" {
   source = "../modules/module"
 }
 output "vnet" {
-    value = module.data_sources.vnet
-  }
+  value = module.data_sources.vnet
+}

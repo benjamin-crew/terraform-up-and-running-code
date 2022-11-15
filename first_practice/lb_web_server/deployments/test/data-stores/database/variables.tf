@@ -6,21 +6,21 @@ variable "rg_name" {
 
 # Database
 variable "mssql_server_name" {
-  type = string
+  type    = string
   default = "bctestsqlserver"
 }
 
 variable "mssql_database_name" {
-  type = string
+  type    = string
   default = "bctestsqldb"
 }
 
 variable "mssql_login" {
-  type = string
+  type      = string
   sensitive = true
 }
 
 variable "mssql_login_password" {
-  type = string
+  type      = string
   sensitive = true
 }

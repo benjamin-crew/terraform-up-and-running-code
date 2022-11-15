@@ -16,10 +16,10 @@ module "http_server" {
   rg_name = var.rg_name
 
   # Virtual Network
-  vnet_name     = var.vnet_name
+  vnet_name = var.vnet_name
 
   # Subnet
-  vmss_subnet_name  = var.vmss_subnet_name
+  vmss_subnet_name = var.vmss_subnet_name
 
   # Public IP
   public_ip_name = var.public_ip_name
