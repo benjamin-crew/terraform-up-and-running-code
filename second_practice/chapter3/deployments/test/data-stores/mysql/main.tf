@@ -9,15 +9,15 @@ terraform {
   required_version = "~> 1.0"
 }
 
-module "network" {
-  source = "../../../../modules/network"
+module "mysql" {
+  source = "../../../../modules/data-stores/mysql"
 
-  resource_group_name           = var.resource_group_name
-  virtual_network_name          = var.virtual_network_name
-  virtual_network_address_space = var.virtual_network_address_space
-  subnet_name                   = var.subnet_name
-  subnet_address_space          = var.subnet_address_space
-  server_port                   = var.server_port
-  nsg_name                      = var.nsg_name
+  resource_group_name = var.resource_group_name
+  virtual_network_name = var.virtual_network_name
+  db_subnet_name = var.db_subnet_name
+  mysql_server_name = var.mysql_server_name
+  db_server_sku = var.db_server_sku
+  administrator_login = var.administrator_login
+  administrator_password = var.administrator_password
 
 }

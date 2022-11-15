@@ -5,6 +5,6 @@ terraform {
     resource_group_name  = "bc-uks-tst-tfupandrunning-rg01"
     storage_account_name = "bcukststtfuandrsa01"
     container_name       = "tfstate"
-    key                  = "network.tfstate"
+    key                  = "mysql.tfstate"
   }
 }

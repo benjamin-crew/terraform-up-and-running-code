@@ -7,23 +7,26 @@ variable "virtual_network_name" {
   type = string
 }
 
-variable "virtual_network_address_space" {
+variable "db_subnet_name" {
   type = string
 }
 
-variable "subnet_name" {
+variable "mysql_server_name" {
   type = string
+  default = "B_Standard_B1s"
 }
 
-variable "subnet_address_space" {
+variable "db_server_sku" {
   type = string
+  default = "B_Standard_B1s"
 }
 
-variable "server_port" {
-  description = "The port the server will use for HTTP requests"
-  type        = number
+variable "administrator_login" {
+  type = string
+  default = "mysqladmin"
 }
 
-variable "nsg_name" {
+variable "administrator_password" {
   type = string
+  sensitive = true
 }

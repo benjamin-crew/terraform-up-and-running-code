@@ -12,6 +12,7 @@ variable "virtual_network_name" {
 
 variable "vmss_password" {
   type = string
+  sensitive = true
 }
 
 variable "server_port" {

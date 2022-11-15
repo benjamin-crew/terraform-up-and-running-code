@@ -29,6 +29,11 @@ variable "vmss_sku" {
   default = "Standard_B1ls"
 }
 
+variable "vmss_password" {
+    type = string
+    sensitive = true
+}
+
 variable "vmss_instances" {
   type    = number
   default = 1

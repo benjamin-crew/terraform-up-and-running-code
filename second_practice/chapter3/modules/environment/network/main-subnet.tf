@@ -10,4 +10,15 @@ resource "azurerm_subnet" "db_subnet" {
   resource_group_name  = data.azurerm_resource_group.deployment-environment-resource-group.name
   virtual_network_name = azurerm_virtual_network.virtual-network.name
   address_prefixes     = [var.db_subnet_address_space]
+  
+  service_endpoints    = ["Microsoft.Storage"]
+  delegation {
+    name = "fs"
+    service_delegation {
+      name = "Microsoft.DBforMySQL/flexibleServers"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+      ]
+    }
+  }
 }
