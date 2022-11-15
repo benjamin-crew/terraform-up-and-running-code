@@ -10,7 +10,7 @@ terraform {
 }
 
 module "vmss_frontend_web_server" {
-  source = "../../../modules/vmss_frontend_web_server"
+  source = "../../../../modules/vmss_frontend_web_server"
 
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.virtual_network_name
