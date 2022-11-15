@@ -11,19 +11,11 @@ variable "virtual_network_address_space" {
   type = string
 }
 
-variable "vmss_subnet_name" {
+variable "subnet_name" {
   type = string
 }
 
-variable "vmss_subnet_address_space" {
-  type = string
-}
-
-variable "db_subnet_name" {
-  type = string
-}
-
-variable "db_subnet_address_space" {
+variable "subnet_address_space" {
   type = string
 }
 
@@ -32,10 +24,6 @@ variable "server_port" {
   type        = number
 }
 
-variable "vmss_nsg_name" {
-  type = string
-}
-
-variable "db_nsg_name" {
+variable "nsg_name" {
   type = string
 }

@@ -10,7 +10,7 @@ terraform {
 }
 
 module "deployment-environment" {
-  source = "../../../../modules/deployment-environment"
+  source = "../../../../modules/environment/deployment-environment"
 
   resource_group_name  = var.resource_group_name
   location             = var.location
