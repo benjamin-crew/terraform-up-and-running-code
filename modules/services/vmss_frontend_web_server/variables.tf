@@ -43,3 +43,8 @@ variable "vmss_lb_name" {
 variable "mysql_server_name" {
   type = string
 }
+
+variable "custom_tags" {
+  description = "Custom tags to set on the Instances in the VMSS"
+  type = map(string)
+}
