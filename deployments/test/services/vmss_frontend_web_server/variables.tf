@@ -53,3 +53,11 @@ variable "mysql_server_name" {
   type = string
   default = "tfupandrunningdb"
 }
+
+variable "custom_tags" {
+  type = map(string)
+  default = {
+    Owner = "ben"
+    ManagedBy = "terraform"
+  }  
+}

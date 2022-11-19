@@ -25,4 +25,6 @@ module "vmss_frontend_web_server" {
   vmss_password  = var.vmss_password
 
   mysql_server_name = var.mysql_server_name
+
+  custom_tags = var.custom_tags
 }
